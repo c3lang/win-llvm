@@ -18,8 +18,7 @@ if /i "%1" == "x64" goto :amd64
 @REM if /i "%1" == "msvc10" goto :msvc10
 @REM if /i "%1" == "msvc12" goto :msvc12
 @REM if /i "%1" == "msvc14" goto :msvc14
-@REM if /i "%1" == "msvc15" goto :msvc15
-if /i "%1" == "msvc16" goto :msvc16
+if /i "%1" == "msvc15" goto :msvc15
 if /i "%1" == "libcmt" goto :libcmt
 if /i "%1" == "msvcrt" goto :msvcrt
 if /i "%1" == "dbg" goto :dbg
@@ -71,12 +70,6 @@ goto :loop
 :msvc15
 set TOOLCHAIN=msvc15
 set CMAKE_GENERATOR=Visual Studio 15 2017
-shift
-goto :loop
-
-:msvc16
-set TOOLCHAIN=msvc16
-set CMAKE_GENERATOR=Visual Studio 16 2019
 shift
 goto :loop
 
