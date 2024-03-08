@@ -83,6 +83,7 @@ goto :loop
 
 :msvc17
 set TOOLCHAIN=msvc17
+set MSVC_TOOLSET_VERSION=143
 set CMAKE_GENERATOR=Visual Studio 17 2022
 shift
 goto :loop
