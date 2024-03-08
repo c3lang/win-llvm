@@ -1,6 +1,6 @@
 This repository is modified from https://github.com/vovkos/llvm-package-windows
 
-It is updated to build LLVM + LLD 16 using Visual Studio 2019 as required by C3C_.
+It is updated to build LLVM + LLD 17 using Visual Studio 2019 as required by C3C_.
 
 .. _C3C: https://github.com/c3lang/c3c
 
@@ -27,7 +27,6 @@ The ``llvm-package-windows`` project builds all major versions of LLVM on **GitH
 	- Release
 
 * Target CPU:
-	- IA32 (a.k.a. x86)
 	- AMD64 (a.k.a. x86_64)
 
 * C/C++ Runtime:
