@@ -1,6 +1,6 @@
 This repository is modified from https://github.com/vovkos/llvm-package-windows
 
-It is updated to build LLVM + LLD 17 using Visual Studio 2019 as required by C3C_.
+It is updated to build LLVM + LLD 18 using Visual Studio 2019 as required by C3C_.
 
 .. _C3C: https://github.com/c3lang/c3c
 
@@ -20,7 +20,7 @@ So why not use pre-built packages from the official `LLVM download page <http://
 The ``llvm-package-windows`` project builds all major versions of LLVM on **GitHub Actions** for the following, much more complete matrix:
 
 * Toolchain:
-	- Visual Studio 2017
+	- Visual Studio 2019
 
 * Configuration:
 	- Debug
