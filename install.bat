@@ -26,22 +26,3 @@ if /i "%BUILD_MASTER%" == "true" (
 	move %WORKING_DIR%\llvm-project-%LLVM_VERSION%.src %WORKING_DIR%\llvm-project
 	dir %WORKING_DIR%
 )
-
-if "%CONFIGURATION%" == "Debug" goto dbg
-goto :eof
-
-:: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-:: on Debug builds:
-:: - patch llvm-config/CMakeLists.txt to always build and install llvm-config
-:: - patch AddLLVM.cmake to also install PDBs on Debug builds
-
-:dbg
-
-echo set_target_properties(llvm-config PROPERTIES EXCLUDE_FROM_ALL FALSE) >> %WORKING_DIR%\llvm-project\llvm\tools\llvm-config\CMakeLists.txt
-echo install(TARGETS llvm-config RUNTIME DESTINATION bin) >> %WORKING_DIR%\llvm-project\llvm\tools\llvm-config\CMakeLists.txt
-
-perl pdb-patch.pl %WORKING_DIR%\llvm-project\llvm\cmake\modules\AddLLVM.cmake
-
-goto :eof
-
