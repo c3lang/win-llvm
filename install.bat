@@ -2,6 +2,18 @@
 
 if not exist %WORKING_DIR% mkdir %WORKING_DIR%
 
+::..............................................................................
+
+if /i "%BUILD_PROJECT%" == "llvm" goto :llvm
+if /i "%BUILD_PROJECT%" == "clang" goto :clang
+
+echo Invalid argument: '%1'
+exit -1
+
+::..............................................................................
+
+:llvm
+
 :: download LLVM sources
 
 if /i "%BUILD_MASTER%" == "true" (
