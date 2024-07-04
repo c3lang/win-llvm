@@ -95,14 +95,14 @@ goto :loop
 :libcmt
 set CRT=libcmt
 set LLVM_CRT=MT
-set CMAKE_CRT=MultiThreaded
+set CMAKE_CRT=MultiThreaded<$<CONFIG:Debug>:Debug>
 shift
 goto :loop
 
 :msvcrt
 set CRT=msvcrt
 set LLVM_CRT=MD
-set CMAKE_CRT=MultiThreadedDLL
+set CMAKE_CRT=MultiThreaded<$<CONFIG:Debug>:Debug>DLL
 shift
 goto :loop
 
@@ -124,7 +124,7 @@ goto :loop
 :dbg
 set CONFIGURATION=Debug
 set DEBUG_SUFFIX=-dbg
-set LLVM_CMAKE_CONFIGURE_EXTRA_FLAGS=-DLLVM_OPTIMIZED_TABLEGEN=ON -DLLVM_BUILD_TOOLS=ON -DLLVM_ENABLE_ASSERTIONS=ON
+set LLVM_CMAKE_CONFIGURE_EXTRA_FLAGS=-DLLVM_BUILD_TOOLS=OFF -DLLVM_ENABLE_ASSERTIONS=ON
 set CLANG_CMAKE_CONFIGURE_EXTRA_FLAGS=-DCLANG_BUILD_TOOLS=OFF
 shift
 goto :loop
