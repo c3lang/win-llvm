@@ -95,14 +95,14 @@ goto :loop
 :libcmt
 set CRT=libcmt
 set LLVM_CRT=MT
-set CMAKE_CRT="MultiThreaded<$<CONFIG:Debug>:Debug>"
+set CMAKE_CRT="MultiThreaded$<$<CONFIG:Debug>:Debug>"
 shift
 goto :loop
 
 :msvcrt
 set CRT=msvcrt
 set LLVM_CRT=MD
-set CMAKE_CRT="MultiThreaded<$<CONFIG:Debug>:Debug>DLL"
+set CMAKE_CRT="MultiThreaded$<$<CONFIG:Debug>:Debug>DLL"
 shift
 goto :loop
 
