@@ -9,7 +9,7 @@ jobs:
         name: Windows Build
         runs-on: windows-latest
         env:
-            BUILD_PROJECT: llvm
+            BUILD_PROJECT: rt
             BUILD_MASTER: false
             LLVM_VERSION: 18.1.8
 
