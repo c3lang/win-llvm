@@ -139,27 +139,18 @@ set WORKING_DRIVE=%HOMEDRIVE%
 set WORKING_DIR=%HOMEDRIVE%%HOMEPATH%
 
 set LLVM_RELEASE_TAG=llvm-%LLVM_VERSION%
-set LLVM_CMAKELISTS_URL=https://raw.githubusercontent.com/llvm/llvm-project/main/llvm/CMakeLists.txt
-
-if /i "%BUILD_MASTER%" == "true" (
-	powershell "Invoke-WebRequest -Uri %LLVM_CMAKELISTS_URL% -OutFile CMakeLists.txt"
-	for /f %%i in ('perl print-llvm-version.pl CMakeLists.txt') do set LLVM_VERSION=%%i
-	set LLVM_RELEASE_TAG=llvm-master
-)
 
 if "%TARGET_CPU%" == "" goto :amd64
 if "%TOOLCHAIN%" == "" goto :msvc17
 if "%CRT%" == "" goto :libcmt
 if "%CONFIGURATION%" == "" goto :release
 
-set TAR_SUFFIX=.tar.xz
-perl compare-versions.pl %LLVM_VERSION% 3.5.0
-if %errorlevel% == -1 set TAR_SUFFIX=.tar.gz
+set TAR_SUFFIX=
 
 set BASE_DOWNLOAD_URL=https://github.com/llvm/llvm-project/releases/download/llvmorg-%LLVM_VERSION%
 
 set LLVM_MASTER_URL=https://github.com/llvm/llvm-project
-set LLVM_DOWNLOAD_FILE=llvm-project-%LLVM_VERSION%.src%TAR_SUFFIX%
+set LLVM_DOWNLOAD_FILE=llvm-project-%LLVM_VERSION%.src.tar.xz
 set LLVM_DOWNLOAD_URL=%BASE_DOWNLOAD_URL%/%LLVM_DOWNLOAD_FILE%
 set LLVM_RELEASE_NAME=llvm-%LLVM_VERSION%-windows-%TARGET_CPU%-%TOOLCHAIN%-%CRT%%DEBUG_SUFFIX%
 set LLVM_RELEASE_FILE=%LLVM_RELEASE_NAME%.7z
@@ -181,37 +172,12 @@ set LLVM_CMAKE_CONFIGURE_FLAGS= ^
 	-DLLVM_ENABLE_PROJECTS=lld ^
 	-DLLVM_INCLUDE_EXAMPLES=OFF ^
 	-DLLVM_INCLUDE_GO_TESTS=OFF ^
-	-DLLVM_INCLUDE_RUNTIMES=OFF ^
+	-DLLVM_INCLUDE_RUNTIMES=ON ^
+	-DLLVM_ENABLE_RUNTIMES=compiler-rt ^
 	-DLLVM_INCLUDE_TESTS=OFF ^
 	-DLLVM_INCLUDE_UTILS=OFF ^
 	-DLLVM_TEMPORARILY_ALLOW_OLD_TOOLCHAIN=OFF ^
 	%LLVM_CMAKE_CONFIGURE_EXTRA_FLAGS%
-
-:: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-set CLANG_MASTER_URL=https://github.com/llvm-mirror/clang
-set CLANG_DOWNLOAD_FILE=%CLANG_DOWNLOAD_FILE_PREFIX%%LLVM_VERSION%.src%TAR_SUFFIX%
-set CLANG_DOWNLOAD_URL=%BASE_DOWNLOAD_URL%/%CLANG_DOWNLOAD_FILE%
-set CLANG_RELEASE_NAME=clang-%LLVM_VERSION%-windows-%TARGET_CPU%-%TOOLCHAIN%-%CRT%%DEBUG_SUFFIX%
-set CLANG_RELEASE_FILE=%CLANG_RELEASE_NAME%.7z
-set CLANG_RELEASE_DIR=%WORKING_DIR%\%CLANG_RELEASE_NAME%
-set CLANG_RELEASE_DIR=%CLANG_RELEASE_DIR:\=/%
-
-set CLANG_CMAKE_CONFIGURE_FLAGS= ^
-	-G "%CMAKE_GENERATOR%" ^
-	%CMAKE_OPTIONS% ^
-	-DCMAKE_INSTALL_PREFIX=%CLANG_RELEASE_DIR% ^
-	-DCMAKE_DISABLE_FIND_PACKAGE_LibXml2=TRUE ^
-	-DLLVM_INCLUDE_TESTS=OFF ^
-	-DLLVM_TEMPORARILY_ALLOW_OLD_TOOLCHAIN=ON ^
-	-DCLANG_INCLUDE_DOCS=OFF ^
-	-DCLANG_INCLUDE_TESTS=OFF ^
-	-DLLVM_DIR=%LLVM_RELEASE_DIR%/lib/cmake/llvm ^
-	%LLVM_CMAKE_CRT_FLAGS% ^
-	%CLANG_CMAKE_CONFIGURE_EXTRA_FLAGS%
-
-:: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
 set CMAKE_BUILD_FLAGS= ^
 	--config %CONFIGURATION% ^
 	-- ^
@@ -220,8 +186,7 @@ set CMAKE_BUILD_FLAGS= ^
 	/maxcpucount ^
 	/consoleloggerparameters:Summary
 
-if /i "%BUILD_PROJECT%" == "llvm" set DEPLOY_FILE=%LLVM_RELEASE_FILE%
-if /i "%BUILD_PROJECT%" == "rt" set DEPLOY_FILE=%CLANG_RELEASE_FILE%
+set DEPLOY_FILE=%LLVM_RELEASE_FILE%
 
 echo ---------------------------------------------------------------------------
 echo LLVM_VERSION:                %LLVM_VERSION%
