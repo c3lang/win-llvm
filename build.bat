@@ -3,7 +3,19 @@
 %WORKING_DRIVE%
 cd %WORKING_DIR%
 
+::..............................................................................
+
 set THIS_DIR=%CD%
+
+if /i "%BUILD_PROJECT%" == "llvm" goto :llvm
+if /i "%BUILD_PROJECT%" == "compiler-rt" goto :compilerrt
+
+echo Invalid argument: '%1'
+exit -1
+
+:: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+:llvm
 
 cd llvm-project
 
@@ -19,3 +31,18 @@ cd %THIS_DIR%
 
 goto :eof
 
+:: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+:compilerrt
+
+mkdir clang\build
+cd clang\build
+cmake .. %CLANG_CMAKE_CONFIGURE_FLAGS%
+cmake --build . %CMAKE_BUILD_FLAGS%
+cmake --build . --target install %CMAKE_BUILD_FLAGS%
+
+cd %THIS_DIR%
+
+7z a -t7z %GITHUB_WORKSPACE%\%CLANG_RELEASE_FILE% %CLANG_RELEASE_NAME%
+
+goto :eof
