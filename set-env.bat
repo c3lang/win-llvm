@@ -221,7 +221,7 @@ set CMAKE_BUILD_FLAGS= ^
 	/consoleloggerparameters:Summary
 
 if /i "%BUILD_PROJECT%" == "llvm" set DEPLOY_FILE=%LLVM_RELEASE_FILE%
-if /i "%BUILD_PROJECT%" == "compiler-rt" set DEPLOY_FILE=%CLANG_RELEASE_FILE%
+if /i "%BUILD_PROJECT%" == "rt" set DEPLOY_FILE=%CLANG_RELEASE_FILE%
 
 echo ---------------------------------------------------------------------------
 echo LLVM_VERSION:                %LLVM_VERSION%

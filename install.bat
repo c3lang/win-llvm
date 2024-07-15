@@ -5,7 +5,7 @@ if not exist %WORKING_DIR% mkdir %WORKING_DIR%
 ::..............................................................................
 
 if /i "%BUILD_PROJECT%" == "llvm" goto :llvm
-if /i "%BUILD_PROJECT%" == "compiler-rt" goto :compilerrt
+if /i "%BUILD_PROJECT%" == "rt" goto :compilerrt
 
 echo Invalid argument: '%1'
 exit -1
