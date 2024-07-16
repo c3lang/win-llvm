@@ -209,5 +209,7 @@ echo LLVM_RELEASE_FILE:           %LLVM_RELEASE_FILE%
 echo LLVM_RELEASE_URL:            %LLVM_RELEASE_URL%
 echo LLVM_CMAKE_CONFIGURE_FLAGS:  %LLVM_CMAKE_CONFIGURE_FLAGS%
 echo ---------------------------------------------------------------------------
+echo RUNTIMES_CMAKE_CONFIGURE_FLAGS:  %RUNTIMES_CMAKE_CONFIGURE_FLAGS%
+echo ---------------------------------------------------------------------------
 echo DEPLOY_FILE: %DEPLOY_FILE%
 echo ---------------------------------------------------------------------------
