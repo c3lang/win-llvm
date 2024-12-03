@@ -10,7 +10,7 @@ jobs:
         runs-on: windows-latest
         env:
             LLVM_VERSION: 19.1.4
-            LLVM_MAJOR_VERSION: 18
+            LLVM_MAJOR_VERSION: 19
 
         strategy:
             fail-fast: false
