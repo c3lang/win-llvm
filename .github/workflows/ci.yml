@@ -9,7 +9,7 @@ jobs:
         name: Windows Build
         runs-on: windows-latest
         env:
-            LLVM_VERSION: 19.1.4
+            LLVM_VERSION: 19.1.5
             LLVM_MAJOR_VERSION: 19
 
         strategy:
