@@ -1,6 +1,6 @@
 This repository is modified from https://github.com/vovkos/llvm-package-windows
 
-It is updated to build LLVM + LLD 18 using Visual Studio 2019 as required by C3C_.
+It is updated to build LLVM + LLD 19 using Visual Studio 2019 as required by C3C_.
 
 .. _C3C: https://github.com/c3lang/c3c
 
